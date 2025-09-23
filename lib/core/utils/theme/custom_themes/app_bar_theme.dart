@@ -1,51 +1,46 @@
 import 'package:flutter/material.dart';
-import '../../constants/app_colors.dart';
+import 'package:task_3/core/utils/constants/app_colors.dart';
+import 'package:task_3/core/utils/constants/sizer.dart';
 
-/// custom app bar theme configuration
+/// custom app bar theme
 class CustomAppBarTheme {
   CustomAppBarTheme._();
 
-  // light theme app bar
-  static const AppBarTheme lightAppBarTheme = AppBarTheme(
+  /// light app bar theme
+  static AppBarTheme lightAppBarTheme = AppBarTheme(
     elevation: 0,
     centerTitle: false,
     scrolledUnderElevation: 0,
     backgroundColor: AppColors.surface,
     surfaceTintColor: Colors.transparent,
-    iconTheme: IconThemeData(
-      color: AppColors.onSurface,
-      size: 24,
-    ),
-    actionsIconTheme: IconThemeData(
-      color: AppColors.onSurface,
+    iconTheme: const IconThemeData(color: AppColors.textPrimary, size: 24),
+    actionsIconTheme: const IconThemeData(
+      color: AppColors.textPrimary,
       size: 24,
     ),
     titleTextStyle: TextStyle(
-      fontSize: 20,
+      fontSize: Sizer.fontLg,
       fontWeight: FontWeight.w600,
-      color: AppColors.onSurface,
+      color: AppColors.textPrimary,
     ),
   );
 
-  // dark theme app bar
-  static const AppBarTheme darkAppBarTheme = AppBarTheme(
+  /// dark app bar theme
+  static AppBarTheme darkAppBarTheme = AppBarTheme(
     elevation: 0,
     centerTitle: false,
     scrolledUnderElevation: 0,
-    backgroundColor: AppColors.surfaceDark,
+    backgroundColor: AppColors.darkSurface,
     surfaceTintColor: Colors.transparent,
-    iconTheme: IconThemeData(
-      color: AppColors.onSurfaceDark,
-      size: 24,
-    ),
-    actionsIconTheme: IconThemeData(
-      color: AppColors.onSurfaceDark,
+    iconTheme: const IconThemeData(color: AppColors.darkTextPrimary, size: 24),
+    actionsIconTheme: const IconThemeData(
+      color: AppColors.darkTextPrimary,
       size: 24,
     ),
     titleTextStyle: TextStyle(
-      fontSize: 20,
+      fontSize: Sizer.fontLg,
       fontWeight: FontWeight.w600,
-      color: AppColors.onSurfaceDark,
+      color: AppColors.darkTextPrimary,
     ),
   );
 }

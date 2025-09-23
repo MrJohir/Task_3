@@ -1,250 +1,155 @@
-import 'package:shared_preferences/shared_preferences.dart';
-import '../utils/logging/logger.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:task_3/core/utils/constants/hive_constants.dart';
+import 'package:task_3/core/utils/logging/logger.dart';
 
-/// storage service for managing local key-value storage using SharedPreferences
+/// local storage service using hive
 class StorageService {
-  static StorageService? _instance;
-  static SharedPreferences? _preferences;
+  static final StorageService _instance = StorageService._internal();
+  factory StorageService() => _instance;
+  StorageService._internal();
 
-  static Future<StorageService> getInstance() async {
-    _instance ??= StorageService._();
-    _preferences ??= await SharedPreferences.getInstance();
-    return _instance!;
-  }
+  late Box _settingsBox;
+  bool _isInitialized = false;
 
-  StorageService._();
+  /// initialize storage service
+  Future<void> init() async {
+    if (_isInitialized) return;
 
-  /// save string value
-  /// [key] - Storage key
-  /// [value] - String value to save
-  /// Returns: true if successful
-  Future<bool> setString(String key, String value) async {
     try {
-      AppLogger.database('SET STRING', 'SharedPreferences', '$key: $value');
-      return await _preferences!.setString(key, value);
-    } catch (error, stackTrace) {
-      AppLogger.error('Failed to save string: $key', error, stackTrace);
-      return false;
+      await Hive.initFlutter();
+
+      // open settings box
+      _settingsBox = await Hive.openBox(HiveConstants.settingsBox);
+
+      _isInitialized = true;
+      AppLogger.info('Storage service initialized successfully');
+    } catch (e) {
+      AppLogger.error('Failed to initialize storage service: $e');
+      rethrow;
     }
   }
 
-  /// get string value
-  /// [key] - Storage key
-  /// [defaultValue] - Default value if key not found
-  /// Returns: String value or default
-  String? getString(String key, {String? defaultValue}) {
+  /// save data to storage
+  Future<void> saveData({
+    required String key,
+    required dynamic value,
+    String? boxName,
+  }) async {
     try {
-      final value = _preferences!.getString(key) ?? defaultValue;
-      AppLogger.database('GET STRING', 'SharedPreferences', '$key: $value');
-      return value;
-    } catch (error, stackTrace) {
-      AppLogger.error('Failed to get string: $key', error, stackTrace);
+      if (boxName != null) {
+        final box = await Hive.openBox(boxName);
+        await box.put(key, value);
+      } else {
+        await _settingsBox.put(key, value);
+      }
+
+      AppLogger.info('Data saved successfully: $key');
+    } catch (e) {
+      AppLogger.error('Failed to save data: $e');
+      rethrow;
+    }
+  }
+
+  /// get data from storage
+  T? getData<T>({required String key, String? boxName, T? defaultValue}) {
+    try {
+      if (boxName != null) {
+        if (Hive.isBoxOpen(boxName)) {
+          final box = Hive.box(boxName);
+          return box.get(key, defaultValue: defaultValue);
+        } else {
+          AppLogger.warning('Box $boxName is not open');
+          return defaultValue;
+        }
+      } else {
+        return _settingsBox.get(key, defaultValue: defaultValue);
+      }
+    } catch (e) {
+      AppLogger.error('Failed to get data: $e');
       return defaultValue;
     }
   }
 
-  /// save integer value
-  /// [key] - Storage key
-  /// [value] - Integer value to save
-  /// Returns: true if successful
-  Future<bool> setInt(String key, int value) async {
+  /// remove data from storage
+  Future<void> removeData({required String key, String? boxName}) async {
     try {
-      AppLogger.database('SET INT', 'SharedPreferences', '$key: $value');
-      return await _preferences!.setInt(key, value);
-    } catch (error, stackTrace) {
-      AppLogger.error('Failed to save int: $key', error, stackTrace);
-      return false;
+      if (boxName != null) {
+        final box = await Hive.openBox(boxName);
+        await box.delete(key);
+      } else {
+        await _settingsBox.delete(key);
+      }
+
+      AppLogger.info('Data removed successfully: $key');
+    } catch (e) {
+      AppLogger.error('Failed to remove data: $e');
+      rethrow;
     }
   }
 
-  /// get integer value
-  /// [key] - Storage key
-  /// [defaultValue] - Default value if key not found
-  /// Returns: Integer value or default
-  int? getInt(String key, {int? defaultValue}) {
+  /// clear all data from a box
+  Future<void> clearBox({String? boxName}) async {
     try {
-      final value = _preferences!.getInt(key) ?? defaultValue;
-      AppLogger.database('GET INT', 'SharedPreferences', '$key: $value');
-      return value;
-    } catch (error, stackTrace) {
-      AppLogger.error('Failed to get int: $key', error, stackTrace);
-      return defaultValue;
-    }
-  }
+      if (boxName != null) {
+        final box = await Hive.openBox(boxName);
+        await box.clear();
+      } else {
+        await _settingsBox.clear();
+      }
 
-  /// save boolean value
-  /// [key] - Storage key
-  /// [value] - Boolean value to save
-  /// Returns: true if successful
-  Future<bool> setBool(String key, bool value) async {
-    try {
-      AppLogger.database('SET BOOL', 'SharedPreferences', '$key: $value');
-      return await _preferences!.setBool(key, value);
-    } catch (error, stackTrace) {
-      AppLogger.error('Failed to save bool: $key', error, stackTrace);
-      return false;
-    }
-  }
-
-  /// get boolean value
-  /// [key] - Storage key
-  /// [defaultValue] - Default value if key not found
-  /// Returns: Boolean value or default
-  bool? getBool(String key, {bool? defaultValue}) {
-    try {
-      final value = _preferences!.getBool(key) ?? defaultValue;
-      AppLogger.database('GET BOOL', 'SharedPreferences', '$key: $value');
-      return value;
-    } catch (error, stackTrace) {
-      AppLogger.error('Failed to get bool: $key', error, stackTrace);
-      return defaultValue;
-    }
-  }
-
-  /// save double value
-  /// [key] - Storage key
-  /// [value] - Double value to save
-  /// Returns: true if successful
-  Future<bool> setDouble(String key, double value) async {
-    try {
-      AppLogger.database('SET DOUBLE', 'SharedPreferences', '$key: $value');
-      return await _preferences!.setDouble(key, value);
-    } catch (error, stackTrace) {
-      AppLogger.error('Failed to save double: $key', error, stackTrace);
-      return false;
-    }
-  }
-
-  /// get double value
-  /// [key] - Storage key
-  /// [defaultValue] - Default value if key not found
-  /// Returns: Double value or default
-  double? getDouble(String key, {double? defaultValue}) {
-    try {
-      final value = _preferences!.getDouble(key) ?? defaultValue;
-      AppLogger.database('GET DOUBLE', 'SharedPreferences', '$key: $value');
-      return value;
-    } catch (error, stackTrace) {
-      AppLogger.error('Failed to get double: $key', error, stackTrace);
-      return defaultValue;
-    }
-  }
-
-  /// save string list
-  /// [key] - Storage key
-  /// [value] - List of strings to save
-  /// Returns: true if successful
-  Future<bool> setStringList(String key, List<String> value) async {
-    try {
-      AppLogger.database('SET STRING LIST', 'SharedPreferences', '$key: $value');
-      return await _preferences!.setStringList(key, value);
-    } catch (error, stackTrace) {
-      AppLogger.error('Failed to save string list: $key', error, stackTrace);
-      return false;
-    }
-  }
-
-  /// get string list
-  /// [key] - Storage key
-  /// [defaultValue] - Default value if key not found
-  /// Returns: List of strings or default
-  List<String>? getStringList(String key, {List<String>? defaultValue}) {
-    try {
-      final value = _preferences!.getStringList(key) ?? defaultValue;
-      AppLogger.database('GET STRING LIST', 'SharedPreferences', '$key: $value');
-      return value;
-    } catch (error, stackTrace) {
-      AppLogger.error('Failed to get string list: $key', error, stackTrace);
-      return defaultValue;
+      AppLogger.info('Box cleared successfully: ${boxName ?? 'settings'}');
+    } catch (e) {
+      AppLogger.error('Failed to clear box: $e');
+      rethrow;
     }
   }
 
   /// check if key exists
-  /// [key] - Storage key
-  /// Returns: true if key exists
-  bool containsKey(String key) {
+  bool hasData({required String key, String? boxName}) {
     try {
-      final exists = _preferences!.containsKey(key);
-      AppLogger.database('CONTAINS KEY', 'SharedPreferences', '$key: $exists');
-      return exists;
-    } catch (error, stackTrace) {
-      AppLogger.error('Failed to check key: $key', error, stackTrace);
+      if (boxName != null) {
+        if (Hive.isBoxOpen(boxName)) {
+          final box = Hive.box(boxName);
+          return box.containsKey(key);
+        } else {
+          return false;
+        }
+      } else {
+        return _settingsBox.containsKey(key);
+      }
+    } catch (e) {
+      AppLogger.error('Failed to check data existence: $e');
       return false;
     }
   }
 
-  /// remove specific key
-  /// [key] - Storage key to remove
-  /// Returns: true if successful
-  Future<bool> remove(String key) async {
+  /// get all keys from a box
+  List<String> getAllKeys({String? boxName}) {
     try {
-      AppLogger.database('REMOVE', 'SharedPreferences', key);
-      return await _preferences!.remove(key);
-    } catch (error, stackTrace) {
-      AppLogger.error('Failed to remove key: $key', error, stackTrace);
-      return false;
+      if (boxName != null) {
+        if (Hive.isBoxOpen(boxName)) {
+          final box = Hive.box(boxName);
+          return box.keys.cast<String>().toList();
+        } else {
+          return [];
+        }
+      } else {
+        return _settingsBox.keys.cast<String>().toList();
+      }
+    } catch (e) {
+      AppLogger.error('Failed to get all keys: $e');
+      return [];
     }
   }
 
-  /// clear all data
-  /// Returns: true if successful
-  Future<bool> clear() async {
+  /// close all boxes
+  Future<void> closeAll() async {
     try {
-      AppLogger.database('CLEAR ALL', 'SharedPreferences', 'Clearing all data');
-      return await _preferences!.clear();
-    } catch (error, stackTrace) {
-      AppLogger.error('Failed to clear all data', error, stackTrace);
-      return false;
+      await Hive.close();
+      _isInitialized = false;
+      AppLogger.info('All storage boxes closed');
+    } catch (e) {
+      AppLogger.error('Failed to close storage boxes: $e');
     }
   }
-
-  /// get all keys
-  /// Returns: Set of all keys
-  Set<String> getKeys() {
-    try {
-      final keys = _preferences!.getKeys();
-      AppLogger.database('GET KEYS', 'SharedPreferences', keys);
-      return keys;
-    } catch (error, stackTrace) {
-      AppLogger.error('Failed to get keys', error, stackTrace);
-      return <String>{};
-    }
-  }
-
-  /// reload preferences from storage
-  /// Returns: true if successful
-  Future<bool> reload() async {
-    try {
-      AppLogger.database('RELOAD', 'SharedPreferences', 'Reloading preferences');
-      await _preferences!.reload();
-      return true;
-    } catch (error, stackTrace) {
-      AppLogger.error('Failed to reload preferences', error, stackTrace);
-      return false;
-    }
-  }
-}
-
-/// storage keys used throughout the app
-class StorageKeys {
-  // theme settings
-  static const String themeMode = 'theme_mode';
-  static const String isDarkMode = 'is_dark_mode';
-  
-  // user preferences
-  static const String defaultNoteColor = 'default_note_color';
-  static const String sortType = 'sort_type';
-  static const String lastSync = 'last_sync';
-  
-  // app settings
-  static const String isFirstLaunch = 'is_first_launch';
-  static const String appVersion = 'app_version';
-  
-  // sync settings
-  static const String autoSync = 'auto_sync';
-  static const String syncOnWifiOnly = 'sync_on_wifi_only';
-  
-  // offline data
-  static const String pendingSyncCount = 'pending_sync_count';
-  static const String lastOfflineTime = 'last_offline_time';
 }

@@ -1,135 +1,76 @@
 import 'package:flutter/material.dart';
-import '../../constants/app_colors.dart';
+import 'package:task_3/core/common/styles/global_text_style.dart';
+import 'package:task_3/core/utils/constants/app_colors.dart';
 
-/// custom text theme configuration
+/// custom text theme
 class CustomTextTheme {
   CustomTextTheme._();
 
-  // light theme text theme
+  /// light text theme
   static TextTheme lightTextTheme = TextTheme(
-    headlineLarge: const TextStyle().copyWith(
-      fontSize: 32,
-      fontWeight: FontWeight.bold,
-      color: AppColors.onSurface,
-    ),
-    headlineMedium: const TextStyle().copyWith(
-      fontSize: 28,
-      fontWeight: FontWeight.bold,
-      color: AppColors.onSurface,
-    ),
-    headlineSmall: const TextStyle().copyWith(
-      fontSize: 24,
-      fontWeight: FontWeight.w600,
-      color: AppColors.onSurface,
-    ),
-    titleLarge: const TextStyle().copyWith(
-      fontSize: 20,
-      fontWeight: FontWeight.w600,
-      color: AppColors.onSurface,
-    ),
-    titleMedium: const TextStyle().copyWith(
-      fontSize: 18,
-      fontWeight: FontWeight.w500,
-      color: AppColors.onSurface,
-    ),
-    titleSmall: const TextStyle().copyWith(
-      fontSize: 16,
-      fontWeight: FontWeight.w500,
-      color: AppColors.onSurface,
-    ),
-    bodyLarge: const TextStyle().copyWith(
-      fontSize: 16,
-      fontWeight: FontWeight.normal,
-      color: AppColors.onSurface,
-    ),
-    bodyMedium: const TextStyle().copyWith(
-      fontSize: 14,
-      fontWeight: FontWeight.normal,
-      color: AppColors.onSurface,
-    ),
-    bodySmall: const TextStyle().copyWith(
-      fontSize: 12,
-      fontWeight: FontWeight.normal,
-      color: AppColors.onSurface,
-    ),
-    labelLarge: const TextStyle().copyWith(
-      fontSize: 14,
-      fontWeight: FontWeight.w500,
-      color: AppColors.onSurface,
-    ),
-    labelMedium: const TextStyle().copyWith(
-      fontSize: 12,
-      fontWeight: FontWeight.w500,
-      color: AppColors.onSurface,
-    ),
-    labelSmall: const TextStyle().copyWith(
-      fontSize: 10,
-      fontWeight: FontWeight.w500,
-      color: AppColors.onSurface,
-    ),
+    headlineLarge: AppTextStyles.headlineLarge,
+    headlineMedium: AppTextStyles.headlineMedium,
+    headlineSmall: AppTextStyles.headlineSmall,
+    titleLarge: AppTextStyles.titleLarge,
+    titleMedium: AppTextStyles.titleMedium,
+    titleSmall: AppTextStyles.titleSmall,
+    bodyLarge: AppTextStyles.bodyLarge,
+    bodyMedium: AppTextStyles.bodyMedium,
+    bodySmall: AppTextStyles.bodySmall,
+    labelLarge: AppTextStyles.labelLarge,
+    labelMedium: AppTextStyles.labelMedium,
+    labelSmall: AppTextStyles.labelSmall,
+    displayLarge: AppTextStyles.displayLarge,
+    displayMedium: AppTextStyles.displayMedium,
+    displaySmall: AppTextStyles.displaySmall,
   );
 
-  // dark theme text theme
+  /// dark text theme
   static TextTheme darkTextTheme = TextTheme(
-    headlineLarge: const TextStyle().copyWith(
-      fontSize: 32,
-      fontWeight: FontWeight.bold,
-      color: AppColors.onSurfaceDark,
+    headlineLarge: AppTextStyles.headlineLarge.copyWith(
+      color: AppColors.darkTextPrimary,
     ),
-    headlineMedium: const TextStyle().copyWith(
-      fontSize: 28,
-      fontWeight: FontWeight.bold,
-      color: AppColors.onSurfaceDark,
+    headlineMedium: AppTextStyles.headlineMedium.copyWith(
+      color: AppColors.darkTextPrimary,
     ),
-    headlineSmall: const TextStyle().copyWith(
-      fontSize: 24,
-      fontWeight: FontWeight.w600,
-      color: AppColors.onSurfaceDark,
+    headlineSmall: AppTextStyles.headlineSmall.copyWith(
+      color: AppColors.darkTextPrimary,
     ),
-    titleLarge: const TextStyle().copyWith(
-      fontSize: 20,
-      fontWeight: FontWeight.w600,
-      color: AppColors.onSurfaceDark,
+    titleLarge: AppTextStyles.titleLarge.copyWith(
+      color: AppColors.darkTextPrimary,
     ),
-    titleMedium: const TextStyle().copyWith(
-      fontSize: 18,
-      fontWeight: FontWeight.w500,
-      color: AppColors.onSurfaceDark,
+    titleMedium: AppTextStyles.titleMedium.copyWith(
+      color: AppColors.darkTextPrimary,
     ),
-    titleSmall: const TextStyle().copyWith(
-      fontSize: 16,
-      fontWeight: FontWeight.w500,
-      color: AppColors.onSurfaceDark,
+    titleSmall: AppTextStyles.titleSmall.copyWith(
+      color: AppColors.darkTextPrimary,
     ),
-    bodyLarge: const TextStyle().copyWith(
-      fontSize: 16,
-      fontWeight: FontWeight.normal,
-      color: AppColors.onSurfaceDark,
+    bodyLarge: AppTextStyles.bodyLarge.copyWith(
+      color: AppColors.darkTextPrimary,
     ),
-    bodyMedium: const TextStyle().copyWith(
-      fontSize: 14,
-      fontWeight: FontWeight.normal,
-      color: AppColors.onSurfaceDark,
+    bodyMedium: AppTextStyles.bodyMedium.copyWith(
+      color: AppColors.darkTextPrimary,
     ),
-    bodySmall: const TextStyle().copyWith(
-      fontSize: 12,
-      fontWeight: FontWeight.normal,
-      color: AppColors.onSurfaceDark,
+    bodySmall: AppTextStyles.bodySmall.copyWith(
+      color: AppColors.darkTextSecondary,
     ),
-    labelLarge: const TextStyle().copyWith(
-      fontSize: 14,
-      fontWeight: FontWeight.w500,
-      color: AppColors.onSurfaceDark,
+    labelLarge: AppTextStyles.labelLarge.copyWith(
+      color: AppColors.darkTextPrimary,
     ),
-    labelMedium: const TextStyle().copyWith(
-      fontSize: 12,
-      fontWeight: FontWeight.w500,
-      color: AppColors.onSurfaceDark,
+    labelMedium: AppTextStyles.labelMedium.copyWith(
+      color: AppColors.darkTextSecondary,
     ),
-    labelSmall: const TextStyle().copyWith(
-      fontSize: 10,
-      fontWeight: FontWeight.w500,
-      color: AppColors.onSurfaceDark,
+    labelSmall: AppTextStyles.labelSmall.copyWith(
+      color: AppColors.darkTextTertiary,
+    ),
+    displayLarge: AppTextStyles.displayLarge.copyWith(
+      color: AppColors.darkTextPrimary,
+    ),
+    displayMedium: AppTextStyles.displayMedium.copyWith(
+      color: AppColors.darkTextPrimary,
+    ),
+    displaySmall: AppTextStyles.displaySmall.copyWith(
+      color: AppColors.darkTextPrimary,
     ),
   );
 }

@@ -1,41 +1,26 @@
-/// api constants class for managing all API endpoints and configurations
+/// api constants class for all api endpoints
 class ApiConstants {
+  ApiConstants._();
+
   // base url
   static const String baseUrl = 'https://jsonplaceholder.typicode.com';
-  
+
   // endpoints
   static const String posts = '/posts';
-  static const String users = '/users';
-  static const String comments = '/comments';
-  
-  // full endpoints
-  static const String createPost = '$baseUrl$posts';
-  static const String updatePost = '$baseUrl$posts'; // append /{id}
-  static const String deletePost = '$baseUrl$posts'; // append /{id}
-  static const String getPost = '$baseUrl$posts'; // append /{id}
-  static const String getAllPosts = '$baseUrl$posts';
-  
-  // timeout values
-  static const int connectionTimeout = 30000; // 30 seconds
-  static const int receiveTimeout = 30000; // 30 seconds
-  
+
+  // methods
+  static const String get = 'GET';
+  static const String post = 'POST';
+  static const String put = 'PUT';
+  static const String delete = 'DELETE';
+
   // headers
-  static const Map<String, String> defaultHeaders = {
-    'Content-Type': 'application/json; charset=UTF-8',
+  static const Map<String, String> headers = {
+    'Content-Type': 'application/json',
     'Accept': 'application/json',
   };
-  
-  // api response codes
-  static const int success = 200;
-  static const int created = 201;
-  static const int noContent = 204;
-  static const int badRequest = 400;
-  static const int unauthorized = 401;
-  static const int forbidden = 403;
-  static const int notFound = 404;
-  static const int internalServerError = 500;
-  
-  // retry configuration
-  static const int maxRetryAttempts = 3;
-  static const int retryDelaySeconds = 2;
+
+  // timeout
+  static const Duration connectionTimeout = Duration(seconds: 30);
+  static const Duration receiveTimeout = Duration(seconds: 30);
 }

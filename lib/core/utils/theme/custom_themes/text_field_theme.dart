@@ -1,129 +1,97 @@
 import 'package:flutter/material.dart';
-import '../../constants/app_colors.dart';
+import 'package:task_3/core/utils/constants/app_colors.dart';
+import 'package:task_3/core/utils/constants/sizer.dart';
 
-/// custom text field theme configuration
+/// custom text field theme
 class CustomTextFieldTheme {
   CustomTextFieldTheme._();
 
-  // light theme input decoration
+  /// light text field theme
   static InputDecorationTheme lightInputDecorationTheme = InputDecorationTheme(
     errorMaxLines: 3,
-    prefixIconColor: AppColors.outline,
-    suffixIconColor: AppColors.outline,
-    labelStyle: const TextStyle().copyWith(
-      fontSize: 14,
-      color: AppColors.onSurface,
+    prefixIconColor: AppColors.textSecondary,
+    suffixIconColor: AppColors.textSecondary,
+    labelStyle: TextStyle(
+      fontSize: Sizer.fontSm,
+      color: AppColors.textSecondary,
     ),
-    hintStyle: const TextStyle().copyWith(
-      fontSize: 14,
-      color: AppColors.outline,
-    ),
-    errorStyle: const TextStyle().copyWith(
-      fontSize: 12,
-      color: AppColors.error,
-    ),
-    floatingLabelStyle: const TextStyle().copyWith(
-      fontSize: 14,
+    hintStyle: TextStyle(fontSize: Sizer.fontSm, color: AppColors.textTertiary),
+    errorStyle: TextStyle(fontSize: Sizer.fontXs, color: AppColors.error),
+    floatingLabelStyle: TextStyle(
       color: AppColors.primary,
+      fontSize: Sizer.fontSm,
     ),
-    border: const OutlineInputBorder().copyWith(
-      borderRadius: BorderRadius.circular(8),
-      borderSide: const BorderSide(
-        width: 1,
-        color: AppColors.outline,
-      ),
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(Sizer.radiusMd),
+      borderSide: const BorderSide(width: 1, color: AppColors.divider),
     ),
-    enabledBorder: const OutlineInputBorder().copyWith(
-      borderRadius: BorderRadius.circular(8),
-      borderSide: const BorderSide(
-        width: 1,
-        color: AppColors.outline,
-      ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(Sizer.radiusMd),
+      borderSide: const BorderSide(width: 1, color: AppColors.divider),
     ),
-    focusedBorder: const OutlineInputBorder().copyWith(
-      borderRadius: BorderRadius.circular(8),
-      borderSide: const BorderSide(
-        width: 2,
-        color: AppColors.primary,
-      ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(Sizer.radiusMd),
+      borderSide: const BorderSide(width: 2, color: AppColors.primary),
     ),
-    errorBorder: const OutlineInputBorder().copyWith(
-      borderRadius: BorderRadius.circular(8),
-      borderSide: const BorderSide(
-        width: 1,
-        color: AppColors.error,
-      ),
+    errorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(Sizer.radiusMd),
+      borderSide: const BorderSide(width: 1, color: AppColors.error),
     ),
-    focusedErrorBorder: const OutlineInputBorder().copyWith(
-      borderRadius: BorderRadius.circular(8),
-      borderSide: const BorderSide(
-        width: 2,
-        color: AppColors.error,
-      ),
+    focusedErrorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(Sizer.radiusMd),
+      borderSide: const BorderSide(width: 2, color: AppColors.error),
     ),
-    filled: true,
     fillColor: AppColors.surface,
-    contentPadding: const EdgeInsets.all(16),
+    filled: true,
+    contentPadding: EdgeInsets.symmetric(
+      horizontal: Sizer.paddingMd,
+      vertical: Sizer.paddingMd,
+    ),
   );
 
-  // dark theme input decoration
+  /// dark text field theme
   static InputDecorationTheme darkInputDecorationTheme = InputDecorationTheme(
     errorMaxLines: 3,
-    prefixIconColor: AppColors.outlineDark,
-    suffixIconColor: AppColors.outlineDark,
-    labelStyle: const TextStyle().copyWith(
-      fontSize: 14,
-      color: AppColors.onSurfaceDark,
+    prefixIconColor: AppColors.darkTextSecondary,
+    suffixIconColor: AppColors.darkTextSecondary,
+    labelStyle: TextStyle(
+      fontSize: Sizer.fontSm,
+      color: AppColors.darkTextSecondary,
     ),
-    hintStyle: const TextStyle().copyWith(
-      fontSize: 14,
-      color: AppColors.outlineDark,
+    hintStyle: TextStyle(
+      fontSize: Sizer.fontSm,
+      color: AppColors.darkTextTertiary,
     ),
-    errorStyle: const TextStyle().copyWith(
-      fontSize: 12,
-      color: AppColors.error,
-    ),
-    floatingLabelStyle: const TextStyle().copyWith(
-      fontSize: 14,
+    errorStyle: TextStyle(fontSize: Sizer.fontXs, color: AppColors.error),
+    floatingLabelStyle: TextStyle(
       color: AppColors.primary,
+      fontSize: Sizer.fontSm,
     ),
-    border: const OutlineInputBorder().copyWith(
-      borderRadius: BorderRadius.circular(8),
-      borderSide: const BorderSide(
-        width: 1,
-        color: AppColors.outlineDark,
-      ),
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(Sizer.radiusMd),
+      borderSide: const BorderSide(width: 1, color: AppColors.darkDivider),
     ),
-    enabledBorder: const OutlineInputBorder().copyWith(
-      borderRadius: BorderRadius.circular(8),
-      borderSide: const BorderSide(
-        width: 1,
-        color: AppColors.outlineDark,
-      ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(Sizer.radiusMd),
+      borderSide: const BorderSide(width: 1, color: AppColors.darkDivider),
     ),
-    focusedBorder: const OutlineInputBorder().copyWith(
-      borderRadius: BorderRadius.circular(8),
-      borderSide: const BorderSide(
-        width: 2,
-        color: AppColors.primary,
-      ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(Sizer.radiusMd),
+      borderSide: const BorderSide(width: 2, color: AppColors.primary),
     ),
-    errorBorder: const OutlineInputBorder().copyWith(
-      borderRadius: BorderRadius.circular(8),
-      borderSide: const BorderSide(
-        width: 1,
-        color: AppColors.error,
-      ),
+    errorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(Sizer.radiusMd),
+      borderSide: const BorderSide(width: 1, color: AppColors.error),
     ),
-    focusedErrorBorder: const OutlineInputBorder().copyWith(
-      borderRadius: BorderRadius.circular(8),
-      borderSide: const BorderSide(
-        width: 2,
-        color: AppColors.error,
-      ),
+    focusedErrorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(Sizer.radiusMd),
+      borderSide: const BorderSide(width: 2, color: AppColors.error),
     ),
+    fillColor: AppColors.darkSurface,
     filled: true,
-    fillColor: AppColors.surfaceDark,
-    contentPadding: const EdgeInsets.all(16),
+    contentPadding: EdgeInsets.symmetric(
+      horizontal: Sizer.paddingMd,
+      vertical: Sizer.paddingMd,
+    ),
   );
 }
