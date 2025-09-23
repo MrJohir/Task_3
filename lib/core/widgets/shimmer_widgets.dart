@@ -19,14 +19,18 @@ class ShimmerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Container(
       width: width,
       height: height,
       margin: margin,
       child: Shimmer.fromColors(
-        baseColor: isDark ? AppColors.darkSurfaceVariant.withOpacity(0.3) : Colors.grey[300]!,
-        highlightColor: isDark ? AppColors.darkSurfaceVariant.withOpacity(0.5) : Colors.grey[100]!,
+        baseColor: isDark
+            ? AppColors.darkSurfaceVariant.withOpacity(0.3)
+            : Colors.grey[300]!,
+        highlightColor: isDark
+            ? AppColors.darkSurfaceVariant.withOpacity(0.5)
+            : Colors.grey[100]!,
         child: Container(
           decoration: BoxDecoration(
             color: isDark ? AppColors.darkSurfaceVariant : Colors.white,
@@ -47,9 +51,7 @@ class NoteCardShimmer extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 12),
       child: Card(
         elevation: 2,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -62,7 +64,7 @@ class NoteCardShimmer extends StatelessWidget {
                 borderRadius: 4,
               ),
               const SizedBox(height: 12),
-              
+
               // Content shimmer (3 lines)
               const ShimmerWidget(
                 width: double.infinity,
@@ -76,22 +78,14 @@ class NoteCardShimmer extends StatelessWidget {
                 borderRadius: 4,
               ),
               const SizedBox(height: 8),
-              const ShimmerWidget(
-                width: 200,
-                height: 16,
-                borderRadius: 4,
-              ),
+              const ShimmerWidget(width: 200, height: 16, borderRadius: 4),
               const SizedBox(height: 16),
-              
+
               // Bottom row with date and actions
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const ShimmerWidget(
-                    width: 100,
-                    height: 14,
-                    borderRadius: 4,
-                  ),
+                  const ShimmerWidget(width: 100, height: 14, borderRadius: 4),
                   Row(
                     children: [
                       const ShimmerWidget(
@@ -120,10 +114,7 @@ class NoteCardShimmer extends StatelessWidget {
 class NotesListShimmer extends StatelessWidget {
   final int itemCount;
 
-  const NotesListShimmer({
-    super.key,
-    this.itemCount = 6,
-  });
+  const NotesListShimmer({super.key, this.itemCount = 6});
 
   @override
   Widget build(BuildContext context) {
@@ -165,17 +156,9 @@ class StatsShimmer extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   children: [
-                    const ShimmerWidget(
-                      width: 40,
-                      height: 24,
-                      borderRadius: 4,
-                    ),
+                    const ShimmerWidget(width: 40, height: 24, borderRadius: 4),
                     const SizedBox(height: 8),
-                    const ShimmerWidget(
-                      width: 80,
-                      height: 16,
-                      borderRadius: 4,
-                    ),
+                    const ShimmerWidget(width: 80, height: 16, borderRadius: 4),
                   ],
                 ),
               ),
@@ -188,17 +171,9 @@ class StatsShimmer extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   children: [
-                    const ShimmerWidget(
-                      width: 40,
-                      height: 24,
-                      borderRadius: 4,
-                    ),
+                    const ShimmerWidget(width: 40, height: 24, borderRadius: 4),
                     const SizedBox(height: 8),
-                    const ShimmerWidget(
-                      width: 80,
-                      height: 16,
-                      borderRadius: 4,
-                    ),
+                    const ShimmerWidget(width: 80, height: 16, borderRadius: 4),
                   ],
                 ),
               ),

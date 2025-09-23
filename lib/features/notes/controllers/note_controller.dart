@@ -50,14 +50,14 @@ class NoteController extends GetxController {
   Future<void> loadNotes() async {
     try {
       _isLoading.value = true;
-      
+
       // Add minimum loading time to show shimmer effect
       final loadingFuture = _noteRepository.getAllNotes();
       final minimumDelay = Future.delayed(const Duration(milliseconds: 800));
-      
+
       final results = await Future.wait([loadingFuture, minimumDelay]);
       final notes = results[0] as List<NoteModel>;
-      
+
       _notes.value = notes;
       _applySearchFilter();
 
@@ -75,13 +75,13 @@ class NoteController extends GetxController {
     try {
       _searchQuery.value = query;
       _isSearching.value = query.isNotEmpty;
-      
+
       if (query.isNotEmpty) {
         // Show shimmer effect for search
         _isLoading.value = true;
         await Future.delayed(const Duration(milliseconds: 300));
       }
-      
+
       _applySearchFilter();
     } catch (e) {
       AppLogger.error('Failed to search notes: $e');
