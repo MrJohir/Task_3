@@ -15,9 +15,9 @@ class AppRoutes {
 
   // route pages
   static List<GetPage> pages = [
-    GetPage(name: home, page: () => const NotesListScreen()),
-    GetPage(name: notesList, page: () => const NotesListScreen()),
-    GetPage(name: noteEditor, page: () => const NoteEditorScreen()),
-    GetPage(name: settings, page: () => const SettingsScreen()),
+    GetPage(name: home, page: () => NotesListScreen()),
+    GetPage(name: notesList, page: () => NotesListScreen()),
+    GetPage(name: noteEditor, page: () =>  NoteEditorScreen()),
+    GetPage(name: settings, page: () =>  SettingsScreen()),
   ];
 }

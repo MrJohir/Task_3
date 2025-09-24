@@ -13,40 +13,49 @@ import 'package:task_3/features/notes/views/widgets/search_widget.dart';
 import 'package:task_3/features/settings/views/screens/settings_screen.dart';
 
 /// notes list screen - main screen showing all notes
-class NotesListScreen extends StatefulWidget {
-  const NotesListScreen({super.key});
+class NotesListScreen extends StatelessWidget {
+  NotesListScreen({super.key});
 
-  @override
-  State<NotesListScreen> createState() => _NotesListScreenState();
-}
-
-class _NotesListScreenState extends State<NotesListScreen> {
-  final NoteController _noteController = Get.find<NoteController>();
+  final NoteController _noteController = Get.put(NoteController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        centerTitle: true,
         title: AppTexts.notes,
         showBackButton: false,
-        actions: [_buildSyncButton(), _buildSettingsButton()],
+        actions: [
+          Obx(() {
+            final hasUnsyncedNotes = _noteController.hasUnsyncedNotes;
+            return IconButton(
+              onPressed: _noteController.syncNotes,
+              icon: Icon(
+                hasUnsyncedNotes ? Icons.sync_problem : Icons.sync,
+                color: hasUnsyncedNotes ? AppColors.warning : null,
+              ),
+              tooltip: hasUnsyncedNotes
+                  ? 'Sync ${_noteController.unsyncedNotesCount} unsynced notes'
+                  : 'Sync notes',
+            );
+          }),
+          IconButton(
+            onPressed: () => Get.to(() => SettingsScreen()),
+            icon: const Icon(Icons.settings),
+            tooltip: AppTexts.settings,
+          ),
+        ],
       ),
       body: Column(
         children: [
-          _buildSearchSection(),
+          const SearchWidget(),
           Expanded(child: _buildNotesSection()),
         ],
       ),
-      floatingActionButton: _buildFloatingActionButton(),
-    );
-  }
-
-  /// build search section
-  Widget _buildSearchSection() {
-    return SearchWidget(
-      onSearchChanged: _noteController.searchNotes,
-      initialQuery: _noteController.searchQuery,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Get.to(() =>  NoteEditorScreen()),
+        tooltip: AppTexts.createNote,
+        child: const Icon(Icons.add),
+      ),
     );
   }
 
@@ -64,84 +73,28 @@ class _NotesListScreenState extends State<NotesListScreen> {
               : EmptyStateType.noNotes,
           onActionPressed: _noteController.isSearching
               ? _noteController.clearSearch
-              : _navigateToCreateNote,
+              : () => Get.to(() =>  NoteEditorScreen()),
         );
       }
 
       return RefreshIndicator(
         onRefresh: _noteController.refreshNotes,
-        child: _buildNotesList(),
-      );
-    });
-  }
-
-  /// build notes list
-  Widget _buildNotesList() {
-    return ListView.builder(
-      padding: EdgeInsets.only(
-        bottom: Sizer.paddingXl * 2, // space for FAB
-      ),
-      itemCount: _noteController.notes.length,
-      itemBuilder: (context, index) {
-        final note = _noteController.notes[index];
-        return NoteCardWidget(
-          note: note,
-          onTap: () => _navigateToEditNote(note.id),
-          onDelete: () => _showDeleteNoteDialog(note.id, note.title),
-        );
-      },
-    );
-  }
-
-  /// build sync button
-  Widget _buildSyncButton() {
-    return Obx(() {
-      final hasUnsyncedNotes = _noteController.hasUnsyncedNotes;
-
-      return IconButton(
-        onPressed: _noteController.syncNotes,
-        icon: Icon(
-          hasUnsyncedNotes ? Icons.sync_problem : Icons.sync,
-          color: hasUnsyncedNotes ? AppColors.warning : null,
+        child: ListView.builder(
+          padding: EdgeInsets.only(
+            bottom: Sizer.paddingXl * 2, // space for FAB
+          ),
+          itemCount: _noteController.notes.length,
+          itemBuilder: (context, index) {
+            final note = _noteController.notes[index];
+            return NoteCardWidget(
+              note: note,
+              onTap: () => Get.to(() => NoteEditorScreen(noteId: note.id)),
+              onDelete: () => _showDeleteNoteDialog(note.id, note.title),
+            );
+          },
         ),
-        tooltip: hasUnsyncedNotes
-            ? 'Sync ${_noteController.unsyncedNotesCount} unsynced notes'
-            : 'Sync notes',
       );
     });
-  }
-
-  /// build settings button
-  Widget _buildSettingsButton() {
-    return IconButton(
-      onPressed: _navigateToSettings,
-      icon: const Icon(Icons.settings),
-      tooltip: AppTexts.settings,
-    );
-  }
-
-  /// build floating action button
-  Widget _buildFloatingActionButton() {
-    return FloatingActionButton(
-      onPressed: _navigateToCreateNote,
-      child: const Icon(Icons.add),
-      tooltip: AppTexts.createNote,
-    );
-  }
-
-  /// navigate to create note screen
-  void _navigateToCreateNote() {
-    Get.to(() => const NoteEditorScreen());
-  }
-
-  /// navigate to edit note screen
-  void _navigateToEditNote(String noteId) {
-    Get.to(() => NoteEditorScreen(noteId: noteId));
-  }
-
-  /// navigate to settings screen
-  void _navigateToSettings() {
-    Get.to(() => const SettingsScreen());
   }
 
   /// show delete note confirmation dialog
@@ -150,7 +103,7 @@ class _NotesListScreenState extends State<NotesListScreen> {
       AlertDialog(
         title: const Text(AppTexts.deleteNoteTitle),
         content: Text(
-          '${AppTexts.deleteNoteMessage}\n\n"${noteTitle.isNotEmpty ? noteTitle : 'Untitled'}"',
+          '${AppTexts.deleteNoteMessage}\n\n${noteTitle.isNotEmpty ? noteTitle : 'Untitled'}',
         ),
         actions: [
           TextButton(

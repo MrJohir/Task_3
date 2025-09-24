@@ -53,8 +53,7 @@ class CustomCard extends StatelessWidget {
       margin: margin ?? EdgeInsets.all(Sizer.marginSm),
       child: Material(
         color:
-            backgroundColor ??
-            (isDark ? AppColors.darkSurface : AppColors.surface),
+            backgroundColor ?? (isDark ? AppColors.divider : AppColors.surface),
         borderRadius: BorderRadius.circular(borderRadius ?? Sizer.radiusMd),
         elevation: elevation,
         child: InkWell(

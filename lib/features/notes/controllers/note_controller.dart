@@ -1,16 +1,22 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:task_3/core/services/connectivity_service.dart';
 import 'package:task_3/core/utils/constants/app_texts.dart';
 import 'package:task_3/core/utils/logging/logger.dart';
 import 'package:task_3/features/notes/models/note_model.dart';
-import 'package:task_3/features/notes/repositories/note_repository.dart';
+import 'package:task_3/core/services/note_repository.dart';
 
 /// note controller for managing note operations
 class NoteController extends GetxController {
-  final NoteRepository _noteRepository = Get.find<NoteRepository>();
-  final ConnectivityService _connectivityService =
-      Get.find<ConnectivityService>();
+  final NoteRepository _noteRepository = Get.put(NoteRepository());
+  final ConnectivityService _connectivityService = Get.put(
+    ConnectivityService(),
+  );
+
+  // search related controllers
+  late final TextEditingController searchController;
+  late final FocusNode searchFocusNode;
 
   // reactive variables
   final RxList<NoteModel> _notes = <NoteModel>[].obs;
@@ -31,7 +37,16 @@ class NoteController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    searchController = TextEditingController();
+    searchFocusNode = FocusNode();
     _initializeRepository();
+  }
+
+  @override
+  void onClose() {
+    searchController.dispose();
+    searchFocusNode.dispose();
+    super.onClose();
   }
 
   /// initialize repository and load notes
@@ -94,6 +109,8 @@ class NoteController extends GetxController {
 
   /// clear search
   void clearSearch() {
+    searchController.clear();
+    searchFocusNode.unfocus();
     _searchQuery.value = '';
     _isSearching.value = false;
     _filteredNotes.value = _notes;

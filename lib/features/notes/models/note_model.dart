@@ -1,6 +1,5 @@
 import 'package:hive/hive.dart';
 import 'package:task_3/core/utils/constants/hive_constants.dart';
-
 part 'note_model.g.dart';
 
 /// note model for local and api data

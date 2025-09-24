@@ -5,7 +5,7 @@ import 'package:task_3/core/utils/logging/logger.dart';
 
 /// connectivity service to monitor internet connection
 class ConnectivityService extends GetxService {
-  static ConnectivityService get instance => Get.find<ConnectivityService>();
+  static ConnectivityService get instance => Get.put<ConnectivityService>(ConnectivityService());
 
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<List<ConnectivityResult>> _connectivitySubscription;

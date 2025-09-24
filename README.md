@@ -29,20 +29,19 @@ lib/
 ├── core/                           # Core functionality & utilities
 │   ├── bindings/                   # Dependency injection
 │   ├── common/                     # Shared widgets & styles
-│   ├── services/                   # Core services (Network, Storage, etc.)
+│   ├── services/                   # Core services (Network, Storage, local data persistence etc.)
 │   └── utils/                      # Constants, themes, helpers
 ├── features/                       # Feature modules
 │   ├── notes/                      # Notes feature
 │   │   ├── controllers/            # Business logic & state management
 │   │   ├── models/                 # Data models
-│   │   ├── repositories/           # Data layer abstraction
 │   │   └── views/                  # UI layer (screens & widgets)
 │   └── settings/                   # Settings feature
 └── routes/                         # App routing configuration
 ```
 
 ### Layer Separation
-
+│   │   ├── repositories/           # Data layer abstraction
 #### 1. **Presentation Layer** (`views/`)
 - UI components (screens & widgets)
 - User interaction handling

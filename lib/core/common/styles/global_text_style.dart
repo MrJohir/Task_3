@@ -30,14 +30,14 @@ class AppTextStyles {
 
   // title styles
   static TextStyle get titleLarge => TextStyle(
-    fontSize: Sizer.fontLg,
+    fontSize: Sizer.fontXxl,
     fontWeight: FontWeight.w600,
     color: AppColors.textPrimary,
     height: 1.3,
   );
 
   static TextStyle get titleMedium => TextStyle(
-    fontSize: Sizer.fontMd,
+    fontSize: Sizer.fontLg,
     fontWeight: FontWeight.w600,
     color: AppColors.textPrimary,
     height: 1.4,

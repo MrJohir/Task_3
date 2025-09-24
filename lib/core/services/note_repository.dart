@@ -5,7 +5,7 @@ import 'package:task_3/core/utils/constants/hive_constants.dart';
 import 'package:task_3/core/utils/logging/logger.dart';
 import 'package:task_3/features/notes/models/note_model.dart';
 
-/// repository for note data operations
+/// repository for note local data operations
 class NoteRepository {
   late Box<NoteModel> _notesBox;
   final NetworkCaller _networkCaller = NetworkCaller();

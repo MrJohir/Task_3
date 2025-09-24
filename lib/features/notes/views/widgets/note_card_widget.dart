@@ -51,17 +51,24 @@ class NoteCardWidget extends StatelessWidget {
                   note.title.isEmpty ? 'Untitled' : note.title,
                   style: AppTextStyles.titleMedium.copyWith(
                     fontWeight: FontWeight.w600,
+                    color: isDark
+                        ? AppColors.darkTextPrimary
+                        : AppColors.textPrimary,
                   ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
+                  // maxLines: 2,
+                  // overflow: TextOverflow.ellipsis,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Text(
                     note.content,
-                    style: AppTextStyles.bodyMedium,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      color: isDark
+                          ? AppColors.darkTextPrimary
+                          : AppColors.textPrimary,
+                    ),
+                    // maxLines: 1,
+                    // overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 Row(

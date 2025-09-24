@@ -10,12 +10,13 @@ import 'package:task_3/features/settings/controllers/theme_controller.dart';
 
 /// settings screen for app configuration
 class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
+  SettingsScreen({super.key});
+  final ThemeController themeController = Get.put<ThemeController>(
+    ThemeController(),
+  );
 
   @override
   Widget build(BuildContext context) {
-    final ThemeController themeController = Get.find<ThemeController>();
-
     return Scaffold(
       appBar: const CustomAppBar(title: AppTexts.settings),
       body: ListView(
@@ -32,6 +33,7 @@ class SettingsScreen extends StatelessWidget {
   /// build theme configuration section
   Widget _buildThemeSection(ThemeController themeController) {
     return CustomCard(
+      
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
